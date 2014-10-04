@@ -108,4 +108,7 @@ sympy-plots-for-*.tex/
 # xindy
 *.xdy
 
+# octave
+*octave-workspace*
+
 
