@@ -1,0 +1,263 @@
+%!TEX program = xelatex
+%# -*- coding: utf-8 -*-
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[12pt,oneside,a4paper]{article}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage[pdfusetitle,
+ bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+ {hyperref}
+\hypersetup{pdfstartview={XYZ null null 1}}
+\usepackage{url}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\usepackage{microtype}
+
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}} 
+\renewcommand{\algorithmicensure}{\textbf{Output:}} 
+
+\usepackage[sc]{mathpazo}
+\linespread{1.1}
+\usepackage[T1]{fontenc}
+
+
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage[figure]{hypcap}
+\usepackage[hypcap]{caption}
+\usepackage{tikz}
+%\usepackage{grffile} 
+%\usepackage{float} 
+\usepackage{pdfpages}
+
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{threeparttable}
+
+%\usepackage[square,numbers,super,comma,sort]{natbib}
+%\usepackage[backend=biber, style=nature, sorting=none, isbn=false, url=false, doi=false]{biblatex}
+%\addbibresource{ref.bib}
+%\usepackage[]{authblk}
+
+\usepackage{verbatim}
+
+\newcommand{\problem}[1]
+{
+    \clearpage
+    \section*{Problem {#1}}
+}
+
+\newcommand{\subproblem}[1]
+{
+    \subsection*{Problem {#1}}
+}
+
+\newcommand{\solution}
+{
+    \vspace{15pt}
+    \noindent\ignorespaces\textbf{\large Solution}
+}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkTitle}
+\rhead{\firstxmark}
+\cfoot{\thepage}
+
+\newcommand{\hmwkTitle}{CSCI 5304 HW 1}
+\newcommand{\hmwkAuthorName}{Jingxiang Li}
+
+\setlength\headheight{15pt}
+\setlength\parindent{0pt}
+\setlength{\parskip}{0.3em}
+
+\newcommand{\m}[1]{\texttt{{#1}}}
+\newcommand{\trace}{\mathrm{trace}}
+
+\pagestyle{fancy}
+
+\title{\hmwkTitle}
+\author{\hmwkAuthorName}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\problem{1}
+Given two vectors $u,v\in \mathbb{R}^{n}$, and real scalars $\alpha$, $\beta$, let $A = I + \alpha uv^{T}$, $B = I + \beta u v^T$.
+
+\subproblem{a}
+If $u, v, \alpha$ are given, find $\beta$ such that $B = A^{-1}$
+
+\solution
+
+$\because B = A^{-1}$\\
+$\therefore A\cdot B = I$\\
+$\Rightarrow (I + \alpha uv^{T})(I + \beta uv^{T}) = I$\\
+$\Rightarrow \alpha uv^{T} + \beta uv^{T} + \alpha\beta uv^{T}uv^{T} = 0$\\
+$\Rightarrow \mathrm{trace}(\alpha uv^{T} + \beta uv^{T} + \alpha\beta uv^{T}uv^{T}) = 0$\\
+$\Rightarrow \alpha\trace (uv^{T}) + \beta\trace (uv^{T}) + \alpha\beta\trace (uv^{T}uv^{T})$\\
+$\Rightarrow \alpha v^{T}u + \beta v^{T}u + \alpha\beta v^{T}uv^{T}u$\\
+if $v^{T}u \neq 0$\\
+then $\alpha + \beta + \alpha \beta v^{T}u = 0$\\
+$\therefore \beta = -\frac{\alpha}{1 + \alpha v^{T}u}$ 
+ 
+\subproblem{b}
+For which values of $\alpha$ is $A$ singular, if any? For that particular value of $\alpha$, give a
+non-zero vector $x$ in the right nullspace of $A$. Write $x$ in terms of $u$, $v$, $\alpha$.
+
+\solution
+
+$\because A$ is singular\\
+$\therefore |I + \alpha uv^{T}| = 0$\\
+Following the Sylvester's determinant theorem, we have\\
+$|I + \alpha uv^{T}| = 1 + \alpha v^{T}u = 0$\\
+$\Rightarrow \alpha = -\frac{1}{v^{T}u}$\\
+\\
+Set $x = u$
+We have $Ax = u - \frac{uv^{T}u}{v^{T}u} = u - u = 0$
+
+\subproblem{c}
+Prove of disprove: for any given pair of vector u, v, there always exists a value $\alpha$ such that A singular. To prove, show such an $\alpha$ always exists, giving a formula in terms of u, v. To disprove, give an example of a pair of non-zero vectors u, v for which no such $\alpha$ exists. In the latter case, what general property do $u$, $v$ satisfy to prevent the existence of $\alpha$? You can illustrate your answer with a $2 \times 2$ example.
+
+\solution
+
+\textbf{Disprove:} When $v^{T}u = 0$, no such $\alpha$ exists. \\
+Because when $v^{T}u = 0$, $|I + \alpha uv^{T}| = 1 + \alpha v^{T}u = 1 > 0$;\\
+For example, let $u = (1, 1)^{T}$, $v = (1, -1)^{T}$, Then $A$ is always non-singular.
+
+\subproblem{d}
+Give a value of $\alpha$ (in terms of $u$, $v$) such that $A^2 = A$ (i.e., $A$ is a projector).
+
+\solution
+
+$\because A^2 = A$\\
+$\therefore (I + \alpha uv^{T})^2 = I + \alpha uv^{T}$\\
+$\Rightarrow I + \alpha uv^{T} + \alpha uv^{T} + \alpha^2 uv^{T}uv^{T} = I + \alpha uv^{T}$\\
+$\Rightarrow \alpha uv^{T} + \alpha^2 uv^{T}uv^{T} = 0$\\
+Thus $\alpha = 0$ is one solution.\\
+Otherwise, $\trace(uv^{T}) + \alpha \trace(uv^{T}uv^{T}) = 0$\\
+$\Rightarrow v^{T}u + \alpha v^{T}uv^{T}u = 0$\\
+if $v^{T}u \neq 0$\\
+$\alpha = -\frac{1}{v^{T}u}$\\
+So that we have $\alpha = 0$ or $\alpha = -\frac{1}{v^{T}u}$.
+
+\problem{2}
+Let $f_{p}(v) = \max_{||u||_{p} = 1}|u^{T}v|$, where $||v||_{p}$ denotes the p-norm.
+
+\subproblem{a}
+Prove or disprove: $f_{p}$ is a vector norm. (check each property, or show one is violated).
+
+\solution
+
+\emph{Proof.}
+\begin{enumerate}
+    \item $f_{p}(v) = \max_{||u||_{p} = 1}|u^{T}v| > 0$
+    \item $\forall \in \mathbb{R},~f_{p}(av) = \max_{||u||_{p} = 1}|u^{T}av| = \max_{||u||_{p} = 1}a|u^{T}v| = af_{p}(v)$
+    \item $f_{p}(x + y) = \max_{||u_{1}||_{p} = 1}|u^{T} (x + y)| \leq |u_{1}^{T}x| + |u_{1}^{T}y| \leq \max_{||u_{x}||_{p} = 1}|u_{x}^{T}x| + \max_{||u_{y}||_{p} = 1}|u_{y}^{T}y| = f_{p}(x) + f_{p}(y)$
+\end{enumerate}
+
+Therefore $f_{p}$ is a vector norm.
+
+\subproblem{b}
+Give a formula for $f_{p}$ for $p = 1,2$. Hint, the answers can be written in terms of $||\cdot||_{2}$, $||\cdot||_{\infty}$. For $p = 2$, use the Cauchy-Schwartz inequality.
+
+\solution
+
+$f_{1}(v) = \max_{||u||_{1} = 1}|u^{T}v| = ||v||_{\infty}$\\
+$f_{2}(v) = \max_{||u||_{2} = 1}|u^{T}v| \leq ||u||_{2}\cdot ||v||_{2} = ||v||_{2}$\\
+
+\problem{3}
+Define the inner product among square matrices by $<A, B> = \trace(A^{T}B)$, where $A$, $B$ are $n \times n$ matrices.
+
+\subproblem{a}
+What is the norm induced by this inner product: $||A|^{2}=<A, A>$? Answer this question for the general case for any $A$.
+
+\solution
+
+$||A|| = \sqrt{\trace(A^{T}A)}$
+
+\subproblem{b}
+Now answer the remaining questions below using this specific matrix:
+$$A = \begin{pmatrix}
+  6 & -2 & 1\\
+  7 & -7 & 3\\
+  -4 & 5 & -2
+ \end{pmatrix}$$
+For this specific matrix $A$, what is the value of $<A, A>$ and the corresponding induced norm $||A||^{2}=<A, A>$ from part (a)?
+
+\solution 
+
+$<A, A> = \trace(A^{T}A) = 193$\\
+$||A|| = \sqrt{<A, A>} = \sqrt{193}$
+
+\subproblem{c}
+What is the $p$ norm of $A$, for $p = 1$? Find a vector $x$ s.t. $||A||_{p} = ||Ax||_{p}$.
+
+\solution
+
+Assume the dimension of $A$ is $n \times m$\\
+$||A||_{1} = \max_{||x||_{1} = 1}||Ax||_{1} = 1_{1\times n} \cdot A \cdot x = \max_{||x||_{1} = 1} (s_{1},\dots,s_{m}) \times x$\\
+Where $s_{i}$ is the $i$th column sum of absolute value of matrix A. Since $||x||_{1} = 1$, we have\\
+$||A||_{1} = \max_{i}{s_{i}}$ = 17\\
+$x = (1, 0, 0)^{T}$
+
+\subproblem{d}
+Repeat the above for $ p = 2$. Use Matlab and write the result to 4 decimal places. Show your Matlab commands.
+
+\solution
+\begin{verbatim}
+format short;
+A = [6, -2, 1; 7, -7, 3;-4, 5, -2];
+[EVECT,EVAL]=eig(A' * A);
+sqrt(max(abs(diag(EVAL))))
+> 
+13.595
+x = EVECT(:,3)
+> 
+0.72496
+-0.63330
+0.27086
+
+\end{verbatim}
+$||A||_{2} = 13.595$\\
+$x = (0.7250, -0.6333, 0.2709)^{T}$
+
+\subproblem{e}
+Use Matlab to help solve this problem: Find a vector $x$ achieving the minimum in $\min_{||x||_{p} = 1}||Ax||_{p}$. Do this for $p = 1, 2$.
+
+\solution
+
+For $p = 1$, similar to the maximum problem, the minimum result should be the smallest value of sum of absolute column values.
+\begin{verbatim}
+min(sum(abs(A),1))
+> 6
+\end{verbatim}
+$\min_{||x||_{1} = 1}||Ax||_{1} = 6$\\
+$x = (0, 0, 1)^{T}$
+\\\\\\
+For $p = 2$, similar to the maximum problem, the minimum result should be the smallest square root of absolute eigenvalue.
+\begin{verbatim}
+[EVECT,EVAL]=eig(A' * A);
+sqrt(min(abs(diag(EVAL))))
+> 
+0.077258
+
+x = EVECT(:,1)
+>
+-0.040332
+0.353531
+0.934553
+\end{verbatim}
+$\min_{||x||_{p} = 2}||Ax||_{2} = 0.0773$\\
+$x = (-0.0403, 0.3535, 0.9346)^T$
+\end{document}
+
+
