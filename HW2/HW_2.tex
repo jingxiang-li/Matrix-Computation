@@ -1,0 +1,375 @@
+%!TEX program = xelatex
+%# -*- coding: utf-8 -*-
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[12pt,oneside,a4paper]{article}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage[pdfusetitle,
+ bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+ {hyperref}
+\hypersetup{pdfstartview={XYZ null null 1}}
+\usepackage{url}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\usepackage{microtype}
+
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}} 
+\renewcommand{\algorithmicensure}{\textbf{Output:}} 
+
+\usepackage[sc]{mathpazo}
+\linespread{1.1}
+\usepackage[T1]{fontenc}
+
+
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage[figure]{hypcap}
+\usepackage[hypcap]{caption}
+\usepackage{tikz}
+%\usepackage{grffile} 
+%\usepackage{float} 
+\usepackage{pdfpages}
+
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{threeparttable}
+
+%\usepackage[square,numbers,super,comma,sort]{natbib}
+%\usepackage[backend=biber, style=nature, sorting=none, isbn=false, url=false, doi=false]{biblatex}
+%\addbibresource{ref.bib}
+%\usepackage[]{authblk}
+
+\usepackage{verbatim}
+\usepackage{listings}
+
+\newcommand{\problem}[1]
+{
+    \clearpage
+    \section*{Problem {#1}}
+}
+
+\newcommand{\subproblem}[1]
+{
+    \subsection*{Problem {#1}}
+}
+
+
+\newcommand{\solution}
+{
+    \vspace{15pt}
+    \noindent\ignorespaces\textbf{\large Solution}\par
+}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkTitle}
+\rhead{\firstxmark}
+\cfoot{\thepage}
+
+\newcommand{\hmwkTitle}{CSCI 5304 HW 2}
+\newcommand{\hmwkAuthorName}{Jingxiang Li}
+
+\setlength\headheight{15pt}
+\setlength\parindent{0pt}
+\setlength{\parskip}{0.5em}
+
+\newcommand{\m}[1]{\texttt{{#1}}}
+
+
+\pagestyle{fancy}
+
+\title{\hmwkTitle}
+\author{\hmwkAuthorName}
+\date{\today}
+
+\begin{document}
+\problem{1}
+Consider the two mathematically equivalent formulas
+\begin{enumerate}
+    \item $a = x^2 - y^2$
+    \item $a = (x + y) * (x - y)$
+\end{enumerate}
+
+\subproblem{a}
+Compute both formulas in 2 digit decimal arithmetic using $x = 11$, $y = 10$. Which formula gives the best answer? Ignore any limits on the exponent.
+
+\solution
+$x = .11\times 10^2$, $y = .10\times 10^2$
+\begin{enumerate}
+    \item $x ^ 2 = .0121 \times 10^4 = .12 \times 10^3$, $y^2 = .0100 \times 10^4 = .10 \times 10^3$, \\
+    $a = x^2 - y^2 = .02 \times 10^3 = .20 \times 10^2$ 
+    \item $x + y = .21 \times 10^2$, $x - y = .01 \times 10^2 = .10 \times 10^1$, \\
+    $a = (x+y)\times(x-y) = .21 \times 10^2 * .10 \times 10^1 = .21 \times 10^2$
+\end{enumerate}
+Note that formula 2 gives the best answer.
+
+\subproblem{b}
+Compute both formulas in 3-bit binary arithmetic using $x = 3/2$ (dec) and $y = 1$. Again, which formula gives the most accurate answer? Ignore any limits on the exponent.
+
+\solution
+$x = .110 \times 2^1$, $y = .100 \times 2^1$
+\begin{enumerate}
+    \item $x^2 = .100100 \times 2^2 = .100 \times 2^2$, $y^2 = .010000 \times 2^2 = .100 \times 2^1$, \\
+    $a = x^2 - y^2 = .100 \times 2^2 - .0100 \times 2^2 = .010 \times 2^2 = .100 \times 2^1$
+    \item $x + y = 1.010 \times 2^1 = .101 \times 2^2$, $x - y = .010 \times 2^1 = .100 \times 2^0$, \\
+    $a = (x + y) \times (x - y) = .010100 \times 2^2 = .101 \times 2^1$
+\end{enumerate}
+Note that formula 2 gives the best answer.
+
+\subproblem{c}
+In your favorite programming language and platform, find two numbers $x$, $y$ such that the two formulas above give different answers. Which answer is more accurate. Report the precision used, the machine epsilon (unit round-off) and the general description of your machine. Can you find two numbers for which one of the answers has no accuracy whatsoever, but the other is almost OK? Note: in Matlab all arithmetic is in double precision, but you can force single precision by using the single function: $\m{a = single(5/4)}$ forces all arithmetic involving a to be on single precision.
+
+\solution
+
+Progarmming Language: Octave 64-bit\\
+Precision: Double Precision\\
+epsilon: $2^{-52}$\\
+Machine: Intel Core i5-3210M CPU @ 2.50GHz$\times$4, 64-bit\par
+
+Let $x = \frac{1}{2} + \mathrm{eps}$, $y = \frac{1}{2}$, and the second fomula has more accuracy.
+
+\begin{verbatim}
+x = 1/2 + eps;
+y = 1/2;
+format hex;
+a1 = x^2 - y^2;
+a2 = (x + y) * (x - y);
+a1
+> a1 = 3cb0000000000000
+a2
+> a2 = 3cb0000000000001
+\end{verbatim}
+
+\problem{2}
+Consider the system
+$$Ax \equiv \begin{pmatrix}
+  -0.001 & 1.001\\
+  0.001  & -0.001\\
+ \end{pmatrix} \begin{pmatrix}
+  x_{1}\\
+  x_{2}\\
+ \end{pmatrix} = \begin{pmatrix}
+  1\\
+  0\\
+ \end{pmatrix} \equiv b$$
+whose solution is $x_{1} = x_{2} = 1$ and the system 
+$$(A + \Delta A)y = b + \Delta b$$
+where $\Delta A = \epsilon |A|$, $\Delta b = \epsilon |b|$. Here $|A|$ means take the absolute value of all the elements individually. In the following we let $\epsilon = 10^{-4}$.
+
+\subproblem{a}
+Compute $k_{\infty}(A)$. Compute the actual value of $||x-y||_{\infty} / ||x||_{\infty}$ and its estimate obtained from using the (standard) condition number $k_{\infty}(A)$ (Theorem 2 in notes).\par
+Which is quite far from the actual error.
+
+\solution
+At first we calculate the actual value using Octave.
+
+\begin{verbatim}
+A = [-0.001, 1.001; 0.001, -0.001];
+b = [1; 0];
+epsilon = 1e-04;
+
+A_new = A + epsilon .* abs(A);
+b_new = b + epsilon .* abs(b);
+y = inv(A_new) * b_new;
+x = [1; 1];
+norm(x - y, inf) / norm(x, inf)
+> 2.0038e-04
+\end{verbatim}
+
+As the result, the actual error is $2.0038\mathrm{e}-04$
+
+Then we calculate its estimate using the following formula
+$$\frac{||x-y||_{\infty}}{||x||_{\infty}} \leq \frac{2\epsilon}{1 - \rho}|||A^{-1}||A|||_{\infty}$$
+where $\rho = \epsilon k_{\infty}(A)$
+
+\begin{verbatim}
+rho = epsilon * cond(A, inf);
+2 * epsilon / (1 - rho) * norm(abs(A) * abs(inv(A)), inf)
+> 6.6785e-04
+\end{verbatim}
+
+Note that the estimation of error bound is $6.6785\mathrm{e}-04$
+
+\subproblem{b}
+Now repeat the above, but this time use $\Delta(b) = \epsilon \begin{pmatrix}
+0\\
+1
+\end{pmatrix}$
+
+\solution
+At first we calculate the actual value using Octave.
+
+\begin{verbatim}
+A = [-0.001, 1.001; 0.001, -0.001];
+b = [1; 0];
+epsilon = 1e-04;
+
+A_new = A + epsilon .* abs(A);
+b_new = b + epsilon .* abs([0; 1]);
+y = inv(A_new) * b_new;
+x = [1; 1];
+norm(x - y, inf) / norm(x, inf)
+> 0.099790
+\end{verbatim}
+
+As the result, the actual error is $0.099790$ \par
+
+Then we calculate its estimate
+
+\begin{verbatim}
+norm(inv(A), inf) * norm(A, inf) / ...
+	(1 - norm(inv(A), inf) * norm(epsilon * abs(A), inf)) *...
+	(norm(epsilon * [0;1], inf) / norm(b, inf) + norm(epsilon * abs(A), inf) /...
+	norm(A, inf))
+> 0.22321
+\end{verbatim}
+
+Note that the estimation of error bound is $0.22321$
+
+\problem{3}
+\subproblem{a}
+Show that the following matrix is singular
+$$A = \begin{pmatrix}
+1&2&-1\\
+2&1&1\\
+-1&1&-2
+\end{pmatrix}$$
+
+\solution
+Let $A_{i}$ be the $i$th column of matrix $A$, then we have $A_{1} - A_{2} - A_{3} = 0$, suggesting $\mathrm{rank}(A) = 2 < 3$, so that $A$ is singular.
+
+\subproblem{b}
+What is the range or column space of $A$ ? What is its null space? Give a basis for each subspace.
+
+\solution
+Since $\mathrm{rank}(A) = 2$, the column space of $A$ should be the linear combination of any two columns of $A$, which is $\{x: x = \alpha A_{1} + \beta A_{2}, \alpha,\beta \in \mathbb{R} \}$, where $A_{1} = \begin{pmatrix}
+1\\
+2\\
+-1
+\end{pmatrix}$, $A_{2} = \begin{pmatrix}
+2\\
+1\\
+1
+\end{pmatrix}$.
+The basis of the column space of $A$ can be $\{A_{1}, A_{2}\}$
+
+Then, the null space will be $\{x: x = \alpha\begin{pmatrix}
+-1\\
+1\\
+1
+\end{pmatrix}, \alpha \in \mathbb{R}\}$
+the basis of the null space of $A$ can be $\{\begin{pmatrix}
+-1\\
+1\\
+1
+\end{pmatrix}\}$
+
+\subproblem{c}
+Consider the matrix $B$ obtained from $A$ by adding $\eta = 0.001$ to the entry (1, 3) (So $B = A + \eta e_{1} e^{T}_{3}$). Without computing the inverse of $B$, show that $||B^{-1}||_{1} \geq 3,000$.
+
+\solution
+Let $x = \begin{pmatrix}
+-1\\
+1\\
+1
+\end{pmatrix}$, then we have $Bx = \begin{pmatrix}
+  -0.001\\
+   0\\
+   0
+\end{pmatrix}$, then we can have the lower bound of 
+$$||B^{-1}||_{1} \geq \frac{||x||_{1}}{||Bx||_{1}} = 3,000$$
+Q.E.D.
+
+\subproblem{d}
+Find a lower bound for the condition number $k_{1}(B)$.
+
+\solution
+$$k_{1}(B) = ||B||_{1} \cdot ||B^{-1}||_{1} \geq 4 \times 3,000 = 12,000$$
+
+\problem{4}
+Consider the $n\times n$ matrix
+$$A_{n} = \begin{pmatrix}
+1 &  & & & & &\\
+-2& 1& & & & &\\
+  &  -2& 1&  & & &\\
+  & &\ddots&\ddots& & &\\
+  &  & & \ddots & \ddots & &\\
+    & &  & & -2 & 1
+\end{pmatrix}$$
+What is $A_{n}^{-1}$? [Hint: Write $A_{n} = I - E_{n}$ and use expansion $I + E + E^{2} + \cdots$.]\par
+Calculate the condition numbers $k_{1}(A_{n})$ and $k_{\infty}(A_{n})$. Verify your results with matlab for the case $n = 10$.
+
+\solution
+Note that we can rewrite $A_{n} = I - E$ where 
+$$E = \begin{pmatrix}
+0 &  & & & & &\\
+2& 0& & & & &\\
+  &  2& 0&  & & &\\
+  & &\ddots&\ddots& & &\\
+  &  & & \ddots & \ddots & &\\
+    & &  & & 2 & 0
+\end{pmatrix}$$
+Then we have $(E)^n = 0$ and 
+$$(I - E)\cdot(I + E + E^2 + \dots + E^{n-1}) = I - E^{n} = I$$
+So that 
+$$A_{n}^{-1} = (I + E + E^2 + \dots + E^{n-1})$$
+
+Then we verify the result using Octave for the case $n = 10$
+\begin{verbatim}
+n = 10;
+A = eye(n);
+for i = 1 : n
+    for j = 1 : n
+        if (i - j == 1)
+            A(i, j) = -2;
+        end
+    end
+end
+E = -(A - eye(n));
+
+result = zeros(n);
+for i = 0 : (n - 1)
+    result = result + E ^ i;
+end
+
+%% A_inv is the inverse matrix of A obtained from formula above
+
+A_inv = result
+>
+     1     0     0     0     0     0     0     0     0     0
+     2     1     0     0     0     0     0     0     0     0
+     4     2     1     0     0     0     0     0     0     0
+     8     4     2     1     0     0     0     0     0     0
+    16     8     4     2     1     0     0     0     0     0
+    32    16     8     4     2     1     0     0     0     0
+    64    32    16     8     4     2     1     0     0     0
+   128    64    32    16     8     4     2     1     0     0
+   256   128    64    32    16     8     4     2     1     0
+   512   256   128    64    32    16     8     4     2     1
+
+%% Verify A_inv is the inverse of A. 
+%% If so, A * A_inv should be the identity matrix.
+
+A * A_inv
+>
+     1   0   0   0   0   0   0   0   0   0
+     0   1   0   0   0   0   0   0   0   0
+     0   0   1   0   0   0   0   0   0   0
+     0   0   0   1   0   0   0   0   0   0
+     0   0   0   0   1   0   0   0   0   0
+     0   0   0   0   0   1   0   0   0   0
+     0   0   0   0   0   0   1   0   0   0
+     0   0   0   0   0   0   0   1   0   0
+     0   0   0   0   0   0   0   0   1   0
+     0   0   0   0   0   0   0   0   0   1
+\end{verbatim}
+
+\end{document}
