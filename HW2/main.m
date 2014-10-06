@@ -1,5 +1,5 @@
 %% 1
-x = 1/2 + eps;
+x = 1/2 + 4 * eps;
 y = 1/2;
 format hex;
 a1 = x^2 - y^2;

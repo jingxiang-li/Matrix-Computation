@@ -91,6 +91,10 @@
 \date{\today}
 
 \begin{document}
+
+\maketitle
+
+
 \problem{1}
 Consider the two mathematically equivalent formulas
 \begin{enumerate}
@@ -134,10 +138,10 @@ Precision: Double Precision\\
 epsilon: $2^{-52}$\\
 Machine: Intel Core i5-3210M CPU @ 2.50GHz$\times$4, 64-bit\par
 
-Let $x = \frac{1}{2} + \mathrm{eps}$, $y = \frac{1}{2}$, and the second fomula has more accuracy.
+Let $x = \frac{1}{2} + 4\times \mathrm{eps}$, $y = \frac{1}{2}$
 
 \begin{verbatim}
-x = 1/2 + eps;
+x = 1/2 + 4 * eps;
 y = 1/2;
 format hex;
 a1 = x^2 - y^2;
@@ -145,8 +149,10 @@ a2 = (x + y) * (x - y);
 a1
 > a1 = 3cb0000000000000
 a2
-> a2 = 3cb0000000000001
+> a2 = 3cd0000000000004
 \end{verbatim}
+
+Note that the second formula has more accuracy.
 
 \problem{2}
 Consider the system
@@ -317,7 +323,7 @@ $$E = \begin{pmatrix}
   &  & & \ddots & \ddots & &\\
     & &  & & 2 & 0
 \end{pmatrix}$$
-Then we have $(E)^n = 0$ and 
+It's easy to see that $E^n = 0$ and 
 $$(I - E)\cdot(I + E + E^2 + \dots + E^{n-1}) = I - E^{n} = I$$
 So that 
 $$A_{n}^{-1} = (I + E + E^2 + \dots + E^{n-1})$$
