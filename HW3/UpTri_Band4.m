@@ -1,3 +1,8 @@
+%% UpTri_Band4: Solve a linear system Ax = b, 
+%% where A is an upper triangle matrix stored as n * 4
+%% Input:   A, b from QR_Given
+%% Output:  x, solution to the linear system
+
 function [x] = UpTri_Band4(A, b)
 
     n = size(b); %% size of b

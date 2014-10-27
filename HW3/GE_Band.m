@@ -1,4 +1,4 @@
-%% GE-Banded: Gaussian Elimination without pivoting for tridiagonal matrix stored as n * 3
+%% GE-Band: Gaussian Elimination without pivoting for tridiagonal matrix stored as n * 3
 %% Input	A: tridiagonal matrix stored as n * 3
 %%			b: n-dimensional vector
 %% outputs	x: the solution for system Ax = b

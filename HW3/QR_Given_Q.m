@@ -34,12 +34,7 @@ function [R b Q] = QR_Given_Q(A, b)
         b(j) = s * bi + c * bj;
         
         %% find Q
-        tmp = eye(n);
-        tmp(i, i) = c;
-        tmp(j, j) = c;
-        tmp(i, j) = s;
-        tmp(j, i) = -s;
-        Q = Q * tmp;
+
     end
 
     R = A;

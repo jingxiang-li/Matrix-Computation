@@ -3,12 +3,15 @@
 %% Input:   A, n * 3
 %%          b, n * 1
 %% Output:  A and b, s.t. A * x = b, where A is uppertri stored as n * 3
+%%          A is R and b is Q'*b
+%%          Q is stored as [c, s, i, j]
 
-function [A b] = QR_Given(A, b)
+function [A b Q] = QR_Given(A, b)
 
     n = size(b)(1);
     A = [A, zeros(n, 1)];
     A((n - 1) : n, 4) = NaN;
+    Q = zeros(n - 1, 4);
 
     for i = 1 : (n - 1)
         j = i + 1;
@@ -30,6 +33,7 @@ function [A b] = QR_Given(A, b)
         bj = b(j);
         b(i) = c * bi - s * bj;
         b(j) = s * bi + c * bj;
+        Q(i, :) = [c, s, i, j];
     end
 
 end
