@@ -1,0 +1,259 @@
+%!TEX program = xelatex
+%# -*- coding: utf-8 -*-
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[12pt,oneside,a4paper]{article}
+\usepackage{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage[pdfusetitle,
+ bookmarks=true,bookmarksnumbered=true,bookmarksopen=true,bookmarksopenlevel=2,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+ {hyperref}
+\hypersetup{pdfstartview={XYZ null null 1}}
+\usepackage{url}
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{2}
+\usepackage{microtype}
+
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage[retainorgcmds]{IEEEtrantools}
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}} 
+\renewcommand{\algorithmicensure}{\textbf{Output:}} 
+
+\usepackage[sc]{mathpazo}
+\linespread{1.1}
+\usepackage[T1]{fontenc}
+%\usepackage{garamondx}
+%\usepackage[garamondx,cmbraces]{newtxmath}
+
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage[figure]{hypcap}
+\usepackage[hypcap]{caption}
+\usepackage{tikz}
+%\usepackage{grffile} 
+%\usepackage{float} 
+\usepackage{pdfpages}
+
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{threeparttable}
+
+%\usepackage[square,numbers,super,comma,sort]{natbib}
+%\usepackage[backend=biber, style=nature, sorting=none, isbn=false, url=false, doi=false]{biblatex}
+%\addbibresource{ref.bib}
+%\usepackage[]{authblk}
+
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{color}
+
+\newcommand{\problem}[1]
+{
+    \clearpage
+    \section*{Problem {#1}}
+}
+
+\newcommand{\subproblem}[1]
+{
+    \subsection*{Problem {#1}}
+}
+
+
+\newcommand{\solution}
+{
+    \vspace{15pt}
+    \noindent\ignorespaces\textbf{\large Solution}\par
+}
+
+\renewcommand{\proof}
+{
+    \vspace{15pt}
+    \noindent\ignorespaces\textbf{\large Proof}\par
+}
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\lhead{\hmwkAuthorName}
+\chead{\hmwkTitle}
+\rhead{\firstxmark}
+\cfoot{\thepage}
+
+\newcommand{\hmwkTitle}{CSCI 5304 HW 6}
+\newcommand{\hmwkAuthorName}{Jingxiang Li}
+
+\setlength\headheight{15pt}
+\setlength\parindent{0pt}
+\setlength{\parskip}{0.5em}
+
+\newcommand{\m}[1]{\texttt{{#1}}}
+
+
+\pagestyle{fancy}
+
+\title{\hmwkTitle}
+\author{\hmwkAuthorName}
+\date{\today}
+
+\begin{document}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\small\ttfamily,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=10pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname,                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+  aboveskip=\baselineskip, 
+  belowskip=-1 \baselineskip
+}
+
+
+\maketitle
+
+\problem{1}
+Let 
+$A = \begin{bmatrix}
+1 & 1 & 1\\
+0 & 1 & 1\\
+s & 0 & 2
+\end{bmatrix}$, with $s = -10^{-6}$
+
+\subproblem{a}
+Compute all the eigenvalues $\lambda_{i}$ and corresponding right eigenvectors $x_{i}$ and left eigenvectors $y_{i}$.
+
+\solution
+$$\Lambda = \mathrm{diag}(\lambda_{1}, \lambda_{2}, \lambda_{3}) = \begin{bmatrix}
+2.0000 & 0 & 0\\
+0 & 1.0010 & 0\\
+0 & 0 & 0.9990
+\end{bmatrix}$$
+$$X = (x_{1}, x_{2}, x_{3}) = \begin{bmatrix}
+-0.8165 & 1.0000 & -1.0000 \\
+-0.4082 & 0.0010 &  0.0010 \\
+-0.4082 & 0.0000 & -0.0000
+\end{bmatrix}$$
+$$Y = (y_{1}, y_{2}, y_{3}) = \begin{bmatrix}
+ 0.0000 &  0.0007 & -0.0007\\
+ 0.0000 &  0.7064 &  0.7078\\
+-1.0000 & -0.7078 & -0.7064
+\end{bmatrix}
+$$
+
+\subproblem{b}
+Compute the ``overall condition number'' for this eigenproblem based on the perturbation formula
+$$|\lambda_{A + E} - \lambda_{A}| \leq ||X|| \cdot ||X^{-1}|| \cdot ||E||$$
+where $X$ is the matrix of right eigenvectors and $E$ is some generic perturbation matrix.
+
+\solution
+$\mathrm{cond}_{0} = ||X|| \cdot ||X^{-1}|| = 1.6608 \times 10^{3}$
+
+\subproblem{c}
+Compute the condition numbers for every individual eigenvalue based on the perturbation approximation (ignoring higher order terms)
+$$|\lambda_{A + E} - \lambda_{A}| \approx \frac{O(||E||)}{\cos{\theta}} = \frac{||y_{i}||_2||x_{i}||_2}{y_{i}^{T}x_{i}}O(||E||)$$
+where $y_i$, $x_i$ are the left and right eigenvectors corresponding to the eigenvalue $\lambda_{A}$ for the matrix $A$. Do this for each eigenvalue of $A$..
+
+\solution
+$\mathrm{cond}_{1} = (2.4495, 707.8165, 706.4023)^T$
+
+\subproblem{d}
+Compute the eigenvalues of the matrix $\tilde{A}$ defined as the same as the matrix $A$ above but with $s = 0$. How do the eigenvalues of $\tilde{A}$ compare with what would be expected based on the condition number bounds?
+
+\solution
+Let's define $E = \begin{bmatrix}
+0 & 0 & 0\\
+0 & 0 & 0\\
+-s & 0 & 0
+\end{bmatrix}$, then we can apply the above result to guess the eigenvalues of $\tilde{A}$. Note that $||E||_{2} = -s$.
+
+First consider the ``overall condition number'', it suggests that for each eigenvalue $\lambda_{A + E}$ of $A + E$ there exists an eigenvalue $\lambda_{A}$ of A such that  
+$$|\lambda_{A + E} - \lambda_{A}| \leq ||X|| \cdot ||X^{-1}|| \cdot ||E|| = -s * 1.6608 \times 10^{3} = 1.6608 \times 10^{-3}$$
+
+Then consider the ``condition numbers for every individual eigenvalue'', we know that 
+$$
+\begin{aligned}
+|\lambda_{A+E}^{(1)} - \lambda_{A}^{(1)}| &\approx -s * 2.4495 = 2.4495 * 10^{-6}\\
+|\lambda_{A+E}^{(2)} - \lambda_{A}^{(2)}| &\approx -s * 707.8165 = 7.0782 * 10^{-4}\\
+|\lambda_{A+E}^{(3)} - \lambda_{A}^{(3)}| &\approx -s * 706.4023 = 7.0640 * 10^{-4}
+\end{aligned}
+$$
+
+Note that the above two ``estimations'' are consistent with each other.
+
+\problem{2}
+Compute all the eigenvalues and eigenvectors of the complex symmetric matrix
+$$A = \begin{bmatrix}
+2i & 1\\
+1 & 0
+\end{bmatrix}$$
+
+\solution
+$\lambda_{1} + \lambda_{2} = 2i$, $\lambda_{1} \cdot \lambda_{2} = -1$, thus $\lambda_{1} = \lambda_{2} = i$. Then we consider the null space of $A - i \cdot I$, thus $u_{1} = (i, 1)^{T}$, $u_{2} = (1, -i)^{T}$
+
+\problem{3}
+Consider the block upper triangular matrix
+$$A = \begin{bmatrix}
+A_{11} & A_{12}\\
+0 & A_{22}
+\end{bmatrix}$$
+
+\subproblem{a}
+Suppose $A_{11}u = \lambda u$, but $\lambda$ is not an eigenvalue of $A_{22}$. Find a vector $v$ (in terms of $A_{i,j}$, $u$) such that the vector $\begin{bmatrix} u \\ v\end{bmatrix}$ is an eigenvector of $A$. What is the corresponding eigenvalue?
+
+\solution
+$$A \cdot \begin{bmatrix}u \\ v \end{bmatrix} = \begin{bmatrix} A_{11}u + A_{12}v \\ A_{22}v\end{bmatrix} = \begin{bmatrix} \lambda u + A_{12}v \\ A_{22}v\end{bmatrix}$$
+Let $v = 0$, then the above equation holds, which indicates that $\begin{bmatrix}u \\ 0 \end{bmatrix}$ is an eigenvector of $A$, with corresponding eigenvalue $\lambda$ which is given by $A_{11}u = \lambda u$.
+
+\subproblem{b}
+Suppose $A_{22}v = \lambda v$, but $\lambda$ is not an eigenvalue of $A_{22}$. Find a vector $u$ (in terms of $A_{i,j}$, $v$) such that the vector $\begin{bmatrix} u \\ v\end{bmatrix}$ is an eigenvector of $A$. What is the corresponding eigenvalue?
+
+\solution
+$$A \cdot \begin{bmatrix}u \\ v \end{bmatrix} = \begin{bmatrix} A_{11}u + A_{12}v \\ A_{22}v\end{bmatrix} = \begin{bmatrix} A_{11}u + A_{12}v \\ \lambda v\end{bmatrix}$$
+Then we know that
+$$
+\begin{aligned}
+&A_{11}u + A_{12}v = \lambda u\\
+\Rightarrow &(A_{11} - \lambda I)u = -A_{12}v\\
+\Rightarrow &u = -(A_{11} - \lambda I)^{-1}A_{12}v
+\end{aligned}
+$$
+Thus if $A_{11} - \lambda I$ is invertible, $\begin{bmatrix}-(A_{11} - \lambda I)^{-1}A_{12}v \\v \end{bmatrix}$ is an eigenvector of $A$ with corresponding eigenvalue $\lambda$.
+
+\subproblem{c}
+Repeat the above assuming $\lambda$ is an eigenvalue for both $A_{11}$ and $A_{22}$. Do any of the above cases fail?
+
+\solution
+$$A \cdot \begin{bmatrix}u \\ v \end{bmatrix} = \begin{bmatrix} A_{11}u + A_{12}v \\ A_{22}v\end{bmatrix} = \begin{bmatrix} \lambda u + A_{12}v \\ \lambda v\end{bmatrix}$$
+For case (a), if $u$ is given, then set $v$ as 0, $\begin{bmatrix} u \\ 0 \end{bmatrix}$ is still an eigenvector of $A$ with corresponding eigenvalue $\lambda$. Hence case (a) does not fail.
+
+For case (b), the problem leads to the following equation
+$$\lambda u = \lambda u + A_{12}v \Rightarrow A_{12}v = 0$$
+Thus if $v$ is happened to be in the null space of $A_{12}$, case (b) still holds and $\begin{bmatrix} 0 \\ v \end{bmatrix}$ is the eigenvector with corrfesponding eigenvalue $\lambda$, otherwise case (b) fails.
+
+\end{document}
